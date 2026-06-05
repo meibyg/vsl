@@ -53,11 +53,35 @@
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
   .wrap{
-    max-width:780px;margin:0 auto;min-height:100dvh;
-    padding:clamp(12px,3vw,28px) clamp(16px,5vw,28px);
-    display:flex;flex-direction:column;align-items:stretch;justify-content:center;text-align:center;
+    max-width:780px;margin:0 auto;
+    padding:0 clamp(16px,5vw,28px);
     position:relative;z-index:1;
   }
+  .hero{
+    min-height:100dvh;
+    display:flex;flex-direction:column;align-items:stretch;justify-content:center;text-align:center;
+    padding:clamp(12px,3vw,28px) 0;
+  }
+  /* ---- Testimonios ---- */
+  .tst{padding:8px 0 54px;text-align:center}
+  .tst-title{font-family:'Fraunces',serif;font-weight:500;color:var(--ink);font-size:clamp(19px,5.2vw,26px);line-height:1.15;margin-bottom:5px}
+  .tst-title em{font-style:italic;color:var(--yellow)}
+  .tst-hint{font-size:12.5px;color:var(--ink-soft);margin-bottom:16px}
+  .tst-track{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:6px 2px 14px;scrollbar-width:none}
+  .tst-track::-webkit-scrollbar{display:none}
+  .tst-card{
+    flex:0 0 auto;width:min(232px,72vw);scroll-snap-align:center;
+    border:1.5px solid rgba(168,85,247,.5);border-radius:14px;overflow:hidden;
+    background:#0c0a12;padding:0;cursor:pointer;
+    box-shadow:0 12px 30px -14px rgba(0,0,0,.8);transition:transform .15s ease, border-color .2s ease;
+  }
+  .tst-card:hover{transform:translateY(-3px);border-color:var(--yellow)}
+  .tst-card img{width:100%;height:300px;object-fit:cover;object-position:top;display:block}
+  .tst-disc{font-size:12px;color:var(--ink-soft);opacity:.85;max-width:560px;margin:12px auto 0;line-height:1.5;padding:0 6px}
+  .lightbox{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.93);display:none;align-items:center;justify-content:center;padding:18px}
+  .lightbox.open{display:flex}
+  .lightbox img{max-width:96%;max-height:88vh;border-radius:10px;box-shadow:0 20px 60px -10px rgba(0,0,0,.8)}
+  .lb-close{position:absolute;top:14px;right:18px;background:none;border:0;color:#fff;font-size:42px;line-height:1;cursor:pointer}
 
   /* ---- Headline ---- */
   .eyebrow{
@@ -199,6 +223,8 @@
 <body>
   <main class="wrap">
 
+  <div class="hero">
+
     <!-- ====== EDITA TU TEXTO AQUÍ ====== -->
     <p class="eyebrow">Mi historia real</p>
     <h1>Sin título, sin experiencia y sin saber por dónde empezar: así dejé de ser mesera y empecé a <em>generar ingresos desde casa</em></h1>
@@ -255,7 +281,21 @@
       </div>
     </div>
 
+  </div><!-- /hero -->
+
+  <section class="tst">
+    <h2 class="tst-title">Esto dicen las que <em>ya dieron el paso</em></h2>
+    <p class="tst-hint">Desliza 👉 y toca cualquiera para leerla completa</p>
+    <div class="tst-track" id="track"></div>
+    <p class="tst-disc">Estos son resultados de verdad de personas reales. Pero seamos honestas: esto no es magia ni dinero fácil. Lo que ves aquí es fruto de decisión y constancia. Tus resultados dependen de ti.</p>
+  </section>
+
   </main>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lb-close" id="lbClose" aria-label="Cerrar">&times;</button>
+    <img id="lightbox-img" src="" alt="Testimonio">
+  </div>
 
 <script>
 /* =========================================================
@@ -268,6 +308,14 @@ const CONFIG = {
   WHATSAPP_MSG: "Holaaa Meiby, estoy lista para iniciar marketing digital contigo.",
   BUTTON_DELAY_SECONDS: 195
 };
+
+/* Testimonios: para agregar uno nuevo, sube la imagen a la carpeta "testimonios/"
+   y añade su nombre aquí en la lista. */
+const TESTIMONIOS = [
+  "t01.jpg","t02.jpg","t03.jpg","t04.jpg","t05.jpg","t06.jpg","t07.jpg","t08.jpg","t09.jpg",
+  "t10.jpg","t11.jpg","t12.jpg","t13.jpg","t14.jpg","t15.jpg","t16.jpg","t17.jpg",
+  "t18.jpg","t19.jpg","t20.jpg","t21.jpg","t22.jpg","t23.jpg","t24.jpg","t25.jpg"
+];
 /* ========================================================= */
 
 document.getElementById("buyBtn").href = CONFIG.BUY_URL;
@@ -377,6 +425,28 @@ function startDelayTimer() {
     }
   }, 500);
 }
+
+// ---- Carrusel de testimonios + ampliar ----
+const track = document.getElementById("track");
+const lb = document.getElementById("lightbox");
+const lbImg = document.getElementById("lightbox-img");
+TESTIMONIOS.forEach((name) => {
+  const card = document.createElement("button");
+  card.className = "tst-card";
+  const img = document.createElement("img");
+  img.src = "testimonios/" + name;
+  img.loading = "lazy";
+  img.alt = "Testimonio real";
+  card.appendChild(img);
+  card.addEventListener("click", () => {
+    lbImg.src = "testimonios/" + name;
+    lb.classList.add("open");
+  });
+  track.appendChild(card);
+});
+function closeLb(){ lb.classList.remove("open"); lbImg.src = ""; }
+lb.addEventListener("click", (e) => { if (e.target !== lbImg) closeLb(); });
+document.getElementById("lbClose").addEventListener("click", closeLb);
 </script>
 </body>
 </html>
