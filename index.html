@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>De mesera a ingresos desde casa</title>
+
+<!-- ====== VISTA PREVIA AL COMPARTIR (Open Graph) ====== -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vsl.meibyg.com/">
+<meta property="og:title" content="Sin título, sin experiencia y sin saber por dónde empezar: así dejé de ser mesera y empecé a generar desde casa">
+<meta property="og:description" content="Mira el video y descubre el paso a paso de cómo lo hice. 🔊">
+<meta property="og:image" content="https://vsl.meibyg.com/preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="De mesera a generar ingresos desde casa">
+<meta name="twitter:description" content="Mira el video y descubre cómo lo hice.">
+<meta name="twitter:image" content="https://vsl.meibyg.com/preview.jpg">
+<!-- ==================================================== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#08070d;
+    --ink:#f8f5ff;
+    --ink-soft:#b7abce;
+    --yellow:#ffd23f;
+    --yellow-2:#ffb800;
+    --purple:#a855f7;
+    --purple-light:#c084fc;
+    --purple-deep:#7c3aed;
+    --yellow-grad:linear-gradient(135deg,#ffe168 0%,#ffc107 100%);
+    --green:#25d366;
+    --ring:rgba(168,85,247,.4);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:var(--bg);color:var(--ink);font-family:'Hanken Grotesk',sans-serif;-webkit-font-smoothing:antialiased}
+  body{
+    min-height:100dvh;
+    overflow-x:hidden;
+    background:
+      radial-gradient(1100px 600px at 50% -10%, rgba(168,85,247,.22), transparent 60%),
+      radial-gradient(900px 520px at 82% 112%, rgba(255,210,63,.12), transparent 55%),
+      var(--bg);
+    position:relative;
+  }
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:99;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{
+    max-width:780px;margin:0 auto;min-height:100dvh;
+    padding:clamp(12px,3vw,28px) clamp(16px,5vw,28px);
+    display:flex;flex-direction:column;align-items:stretch;justify-content:center;text-align:center;
+    position:relative;z-index:1;
+  }
+
+  /* ---- Headline ---- */
+  .eyebrow{
+    font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;
+    color:var(--purple-light);margin-bottom:9px;
+    opacity:0;animation:rise .7s .1s ease forwards;
+  }
+  h1{
+    font-family:'Fraunces',serif;font-weight:400;
+    font-size:clamp(16px,4vw,26px);line-height:1.16;letter-spacing:-.01em;
+    margin-bottom:9px;max-width:none;
+    opacity:0;animation:rise .7s .2s ease forwards;
+  }
+  h1 em{font-style:italic;color:var(--yellow);display:block;margin-top:.18em}
+  .sub{
+    font-size:clamp(13px,3.3vw,15px);color:var(--ink-soft);line-height:1.45;max-width:none;
+    margin-bottom:clamp(16px,3.5vw,22px);
+    opacity:0;animation:rise .7s .3s ease forwards;
+  }
+
+  /* ---- Video ---- */
+  .video-shell{
+    width:100%;position:relative;border-radius:18px;overflow:hidden;
+    background:#000;
+    box-shadow:0 0 0 1px rgba(168,85,247,.3), 0 30px 70px -20px rgba(0,0,0,.85), 0 0 90px -28px var(--ring);
+    opacity:0;animation:rise .8s .4s ease forwards;
+  }
+  .video-aspect{position:relative;width:100%;aspect-ratio:16/9}
+  .video-aspect iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-aspect::after{content:"";position:absolute;inset:0;z-index:2}
+
+  /* ---- Unmute / play overlay ---- */
+  .overlay{
+    position:absolute;inset:0;z-index:5;cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+    background:radial-gradient(circle at 50% 45%, rgba(124,58,237,.25), rgba(8,7,13,.8));
+    backdrop-filter:blur(2px);transition:opacity .45s ease;
+  }
+  .overlay.hide{opacity:0;pointer-events:none}
+  .spk{
+    width:78px;height:78px;border-radius:50%;display:grid;place-items:center;
+    background:linear-gradient(135deg,#c084fc,#7c3aed);color:#fff;
+    box-shadow:0 12px 30px -6px rgba(168,85,247,.6);
+    animation:pulse 2s ease-in-out infinite;
+  }
+  .spk svg{width:34px;height:34px}
+  .overlay p{font-weight:600;font-size:clamp(15px,4.2vw,18px);color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+  .overlay span{font-size:13px;color:var(--ink-soft)}
+  @keyframes pulse{0%,100%{transform:scale(1);box-shadow:0 12px 30px -6px rgba(168,85,247,.6)}50%{transform:scale(1.08);box-shadow:0 16px 42px -4px rgba(168,85,247,.85)}}
+
+  /* ---- CTA ---- */
+  .cta{
+    width:100%;margin-top:clamp(16px,3.5vw,24px);
+    display:flex;flex-direction:column;gap:11px;
+    opacity:0;animation:rise .8s .55s ease forwards;
+  }
+  .cta.delayed{display:none}
+  .btn{
+    width:100%;display:flex;align-items:center;justify-content:center;gap:10px;
+    padding:15px 24px;border-radius:13px;border:0;cursor:pointer;
+    font-family:'Hanken Grotesk',sans-serif;font-size:clamp(15px,4vw,18px);font-weight:700;
+    text-decoration:none;letter-spacing:.01em;transition:transform .15s ease, box-shadow .2s ease, filter .2s ease;
+  }
+  .btn:active{transform:scale(.98)}
+  .btn-buy{
+    background:var(--yellow-grad);color:#2a1d00;
+    box-shadow:0 14px 34px -10px rgba(168,85,247,.7), 0 0 0 1px rgba(255,210,63,.4);
+    animation:breathe 2.6s ease-in-out infinite;
+  }
+  .btn-buy:hover{filter:brightness(1.05);box-shadow:0 18px 44px -8px rgba(168,85,247,.85)}
+  @keyframes breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+  .btn-wa{
+    background:rgba(37,211,102,.12);color:#7ff0a8;border:1.5px solid rgba(37,211,102,.5);
+  }
+  .btn-wa:hover{background:rgba(37,211,102,.2);border-color:var(--green)}
+  .btn svg{width:22px;height:22px;flex:none}
+  .reassure{
+    margin-top:13px;font-size:12.5px;color:var(--ink-soft);line-height:1.4;
+    display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap;
+    opacity:0;animation:rise .8s .7s ease forwards;
+  }
+  .dot{width:5px;height:5px;border-radius:50%;background:var(--yellow);display:inline-block}
+
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+  @media(max-width:600px){ .video-shell{border-radius:14px} }
+  /* pantallas bajas: comprime aún más para evitar scroll */
+  @media(max-height:720px){
+    .eyebrow{margin-bottom:6px}
+    h1{font-size:clamp(15px,3.7vw,22px);margin-bottom:7px}
+    .sub{margin-bottom:12px}
+    .btn{padding:13px 22px}
+    .reassure{margin-top:10px}
+  }
+  @media(max-height:600px){
+    .reassure{display:none}
+    .sub{display:none}
+  }
+</style>
+</head>
+<body>
+  <main class="wrap">
+
+    <!-- ====== EDITA TU TEXTO AQUÍ ====== -->
+    <p class="eyebrow">Mi historia real</p>
+    <h1>Sin título, sin experiencia y sin saber por dónde empezar: así dejé de ser mesera y empecé a <em>generar ingresos desde casa</em></h1>
+    <p class="sub">Son solo 4 minutos… pero pueden cambiar por completo tu situación actual. Dale play 🔊</p>
+    <!-- ================================== -->
+
+    <div class="video-shell">
+      <div class="video-aspect">
+        <div id="player"></div>
+        <div class="overlay" id="overlay">
+          <div class="spk">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/>
+            </svg>
+          </div>
+          <p>Tu video ya comenzó</p>
+          <span>Toca aquí para activar el sonido</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta" id="cta">
+      <a class="btn btn-buy" id="buyBtn" href="#" target="_blank" rel="noopener">
+        Quiero empezar ahora →
+      </a>
+      <a class="btn btn-wa" id="waBtn" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.821 11.821 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.515 5.26l-.999 3.648 3.974-1.042zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+        Escríbeme por WhatsApp
+      </a>
+
+      <div class="reassure">
+        <span>Sin experiencia previa</span><span class="dot"></span>
+        <span>Desde tu celular</span><span class="dot"></span>
+        <span>Empieza hoy</span>
+      </div>
+    </div>
+
+  </main>
+
+<script>
+/* =========================================================
+   CONFIGURACIÓN — todo ya está listo, edita solo si cambia algo
+   ========================================================= */
+const CONFIG = {
+  YOUTUBE_ID: "fjCDnFLWAYw",
+  BUY_URL: "https://meibyg.com/shop/nextflightacademy",
+  WHATSAPP_NUMBER: "19043835091",
+  WHATSAPP_MSG: "Holaaa Meiby, estoy lista para iniciar marketing digital contigo.",
+  BUTTON_DELAY_SECONDS: 0
+};
+/* ========================================================= */
+
+document.getElementById("buyBtn").href = CONFIG.BUY_URL;
+document.getElementById("waBtn").href =
+  "https://wa.me/" + CONFIG.WHATSAPP_NUMBER + "?text=" + encodeURIComponent(CONFIG.WHATSAPP_MSG);
+
+const ctaEl = document.getElementById("cta");
+if (CONFIG.BUTTON_DELAY_SECONDS > 0) ctaEl.classList.add("delayed");
+
+let player;
+let playerReady = false;
+const tag = document.createElement("script");
+tag.src = "https://www.youtube.com/iframe_api";
+document.head.appendChild(tag);
+
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player("player", {
+    videoId: CONFIG.YOUTUBE_ID,
+    playerVars: {
+      autoplay: 1, mute: 1, controls: 0, disablekb: 1, fs: 0,
+      rel: 0, modestbranding: 1, iv_load_policy: 3, playsinline: 1
+    },
+    events: {
+      onReady: (e) => {
+        playerReady = true;
+        e.target.mute();
+        e.target.playVideo();
+        if (CONFIG.BUTTON_DELAY_SECONDS > 0) startDelayTimer();
+      },
+      onError: (e) => {
+        // 101/150 = el dueño no permite incrustar el video
+        const o = document.getElementById("overlay");
+        o.querySelector("p").textContent = "Este video no permite reproducirse aquí";
+        o.querySelector("span").textContent = "Revisa los permisos de incrustación en YouTube";
+      }
+    }
+  });
+}
+
+const overlay = document.getElementById("overlay");
+overlay.addEventListener("click", () => {
+  if (playerReady && player && player.unMute) {
+    player.seekTo(0);
+    player.unMute();
+    player.setVolume(100);
+    player.playVideo();
+    overlay.classList.add("hide");
+  }
+});
+
+function startDelayTimer() {
+  const check = setInterval(() => {
+    if (player && player.getCurrentTime && player.getCurrentTime() >= CONFIG.BUTTON_DELAY_SECONDS) {
+      ctaEl.classList.remove("delayed");
+      ctaEl.style.animation = "rise .8s ease forwards";
+      clearInterval(check);
+    }
+  }, 500);
+}
+</script>
+</body>
+</html>
