@@ -209,6 +209,14 @@
           <p>TOCA PARA VER EL VIDEO</p>
           <span>Dale play y sube el volumen 🔊</span>
         </div>
+        <div class="overlay hide" id="resume">
+          <div class="playbtn">
+            <span class="ripple"></span>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <p>CONTINUAR VIDEO</p>
+          <span>Toca para seguir donde quedaste</span>
+        </div>
       </div>
     </div>
 
@@ -257,6 +265,7 @@ if (CONFIG.BUTTON_DELAY_SECONDS > 0) ctaEl.classList.add("delayed");
 
 let player;
 let playerReady = false;
+let started = false;
 const tag = document.createElement("script");
 tag.src = "https://www.youtube.com/iframe_api";
 document.head.appendChild(tag);
@@ -274,6 +283,20 @@ function onYouTubeIframeAPIReady() {
         e.target.mute();
         e.target.playVideo();
         if (CONFIG.BUTTON_DELAY_SECONDS > 0) startDelayTimer();
+      },
+      onStateChange: (e) => {
+        const resume = document.getElementById("resume");
+        if (e.data === YT.PlayerState.PLAYING) {
+          resume.classList.add("hide");
+        } else if (e.data === YT.PlayerState.PAUSED && started) {
+          // intenta reanudar solo; si el navegador no deja, muestra "Continuar"
+          player.playVideo();
+          setTimeout(() => {
+            if (player.getPlayerState() !== YT.PlayerState.PLAYING) {
+              resume.classList.remove("hide");
+            }
+          }, 400);
+        }
       },
       onError: (e) => {
         // 101/150 = el dueño no permite incrustar el video
@@ -293,6 +316,24 @@ overlay.addEventListener("click", () => {
     player.setVolume(100);
     player.playVideo();
     overlay.classList.add("hide");
+    started = true;
+  }
+});
+
+// Botón "Continuar" si el video quedó en pausa
+const resumeEl = document.getElementById("resume");
+resumeEl.addEventListener("click", () => {
+  if (player && player.playVideo) {
+    player.playVideo();           // continúa donde quedó (no reinicia)
+    resumeEl.classList.add("hide");
+  }
+});
+
+// Si vuelven a la página, reanuda solo
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && started && player && player.getPlayerState &&
+      player.getPlayerState() === YT.PlayerState.PAUSED) {
+    player.playVideo();
   }
 });
 
