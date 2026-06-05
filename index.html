@@ -64,6 +64,9 @@
   }
   /* ---- Testimonios ---- */
   .tst{padding:8px 0 54px;text-align:center}
+  .tst.delayed{display:none}
+  .reveal-seq{opacity:0;transform:translateY(26px)}
+  .reveal-seq.show{animation:rise .7s ease forwards}
   .tst-title{font-family:'Fraunces',serif;font-weight:500;color:var(--ink);font-size:clamp(19px,5.2vw,26px);line-height:1.15;margin-bottom:5px}
   .tst-title em{font-style:italic;color:var(--yellow)}
   .tst-hint{font-size:12.5px;color:var(--ink-soft);margin-bottom:16px}
@@ -177,6 +180,7 @@
   }
   .cta-head span{display:block;font-size:clamp(13px,3.4vw,15px);color:var(--ink);opacity:.9}
   .wa-note{font-size:clamp(12.5px,3.2vw,14px);color:var(--ink-soft);margin:2px 0 -4px}
+  .cta-btns{display:flex;flex-direction:column;gap:11px}
   .btn{
     width:100%;display:flex;align-items:center;justify-content:center;gap:10px;
     padding:15px 24px;border-radius:13px;border:0;cursor:pointer;
@@ -261,10 +265,11 @@
     </div>
 
     <div class="cta" id="cta">
-      <div class="cta-head">
+      <div class="cta-head reveal-seq" id="ctaHead">
         <strong>Si llegaste hasta aquí, es porque quieres cambiar tu realidad.</strong>
         <span>¿Lista para empezar? Elige cómo dar el primer paso 👇</span>
       </div>
+      <div class="cta-btns reveal-seq" id="ctaBtns">
       <a class="btn btn-buy" id="buyBtn" href="#" target="_blank" rel="noopener">
         Quiero empezar ahora →
       </a>
@@ -279,11 +284,12 @@
         <span>Desde tu celular</span><span class="dot"></span>
         <span>Empieza hoy</span>
       </div>
+      </div>
     </div>
 
   </div><!-- /hero -->
 
-  <section class="tst">
+  <section class="tst delayed reveal-seq" id="tst">
     <h2 class="tst-title">Esto dicen las que <em>ya dieron el paso</em></h2>
     <p class="tst-hint">Desliza 👉 y toca cualquiera para leerla completa</p>
     <div class="tst-track" id="track"></div>
@@ -306,7 +312,7 @@ const CONFIG = {
   BUY_URL: "https://meibyg.com/shop/nextflightacademy",
   WHATSAPP_NUMBER: "19043835091",
   WHATSAPP_MSG: "Holaaa Meiby, estoy lista para iniciar marketing digital contigo.",
-  BUTTON_DELAY_SECONDS: 195
+  BUTTON_DELAY_SECONDS: 186
 };
 
 /* Testimonios: para agregar uno nuevo, sube la imagen a la carpeta "testimonios/"
@@ -354,8 +360,7 @@ function onYouTubeIframeAPIReady() {
           ended.classList.add("hide");
         } else if (e.data === YT.PlayerState.ENDED) {
           ended.classList.remove("hide");           // tapa los sugeridos de YouTube
-          ctaEl.classList.remove("delayed");         // asegura que los botones estén visibles
-          ctaEl.style.animation = "rise .6s ease forwards";
+          revealSequence();                          // muestra todo en cascada
         } else if (e.data === YT.PlayerState.PAUSED && started) {
           // intenta reanudar solo; si el navegador no deja, muestra "Continuar"
           player.playVideo();
@@ -416,11 +421,26 @@ document.addEventListener("visibilitychange", () => {
   }
 });
 
+let revealed = false;
+function revealSequence() {
+  if (revealed) return;
+  revealed = true;
+  ctaEl.classList.remove("delayed");
+  const head = document.getElementById("ctaHead");
+  const btns = document.getElementById("ctaBtns");
+  const tst  = document.getElementById("tst");
+  head.classList.add("show");                                  // 1) el mensaje
+  setTimeout(() => btns.classList.add("show"), 600);           // 2) los botones
+  setTimeout(() => {                                           // 3) los testimonios
+    tst.classList.remove("delayed");
+    requestAnimationFrame(() => tst.classList.add("show"));
+  }, 1200);
+}
+
 function startDelayTimer() {
   const check = setInterval(() => {
     if (player && player.getCurrentTime && player.getCurrentTime() >= CONFIG.BUTTON_DELAY_SECONDS) {
-      ctaEl.classList.remove("delayed");
-      ctaEl.style.animation = "rise .8s ease forwards";
+      revealSequence();
       clearInterval(check);
     }
   }, 500);
